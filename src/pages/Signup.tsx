@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../api/auth';
-import { toastError, toastSuccess } from '../utils/toast';
 import { getErrorMessage } from '../errors';
+import { toastError, toastSuccess } from '../utils/toast';
 
 type FormValues = {
   fullName: string;
@@ -33,10 +33,10 @@ export default function Signup() {
   const pwd = watch('password');
 
   return (
-    <div className="container" style={{ maxWidth: 560 }}>
+    <div className="container vh-100 d-flex justify-content-center align-items-center flex-column" style={{ maxWidth: 560 }}>
       <div className="text-center mb-4">
         <i className="bi bi-calendar-event text-success fs-1 d-block" />
-        <div className="fs-4 fw-semibold">EventConnect</div>
+        <div className="fs-4 fw-semibold">RolêHub</div>
       </div>
 
       <div className="card border-0 shadow-sm rounded-4">

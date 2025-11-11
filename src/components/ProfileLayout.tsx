@@ -3,7 +3,7 @@ import ProfileNavBar from "./ProfileNavBar";
 
 export default function ProfileLayout() {
   return (
-    <div className="min-vh-100 bg-dark-subtle">
+    <div className="min-vh-100 bg-main-custom">
       <ProfileNavBar />
       <Outlet />
     </div>

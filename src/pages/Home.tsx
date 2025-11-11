@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import EventsFilter from "../components/EventsFilter";
-import EventCard from "../components/EventCard";
-import { useEvents } from "../hooks/useEvents";
-import { handleToggleInterest } from "../utils/interest";
-import { toastError, toastSuccess } from "../utils/toast";
-import { getErrorMessage } from "../errors";
-import { normalize } from "../utils/text";
-import { matchesDateQuery } from "../utils/datetime";
-import type { eventsLocalization } from "../types/event";
-import StatsBar from "../components/StatsBar";
+import { useAuth } from "../auth/AuthContext";
 import CreateEventButton from "../components/CreateEventButton";
-import { useAuth } from "../auth/AuthContext"; 
+import EventCard from "../components/EventCard";
+import EventsFilter from "../components/EventsFilter";
+import StatsBar from "../components/StatsBar";
+import { getErrorMessage } from "../errors";
+import { useEvents } from "../hooks/useEvents";
+import type { eventsLocalization } from "../types/event";
+import { matchesDateQuery } from "../utils/datetime";
+import { handleToggleInterest } from "../utils/interest";
+import { normalize } from "../utils/text";
+import { toastError, toastSuccess } from "../utils/toast";
 
 export default function Home() {
   const { user } = useAuth(); 
@@ -81,7 +81,7 @@ export default function Home() {
       <section className="hero-full">
         <div className="hero-bg" />
         <div className="container hero-content text-center">
-          <h1 className="display-4 fw-bold text-white">EventConnect</h1>
+          <h1 className="display-4 fw-bold text-white">RolêHub</h1>
           <p className="lead text-white-50 mb-5">
             Descubra eventos incríveis na sua região e conecte-se com a comunidade
             local
