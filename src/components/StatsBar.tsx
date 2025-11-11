@@ -37,7 +37,7 @@ export default function StatsBar({ events }: Props) {
 
   return (
     <section className="py-2">
-      <div className="container">
+      <div className="container mt-3">
         <div className="row text-center g-4 justify-content-center">
 
           {/* Eventos */}

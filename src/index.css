@@ -187,3 +187,7 @@ nav.bg-white {
   height: 140px;
   object-fit: cover;
 }
+
+.bg-main-custom {
+  background-color: #F7F9FB;
+}

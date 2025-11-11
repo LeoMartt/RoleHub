@@ -1,7 +1,7 @@
 // src/components/AppNavbar.tsx
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuthFlag } from "../hooks/useAuthFlag";
 import { logout } from "../api/auth";
+import { useAuthFlag } from "../hooks/useAuthFlag";
 
 export default function AppNavbar() {
   const isAuth = useAuthFlag();
@@ -18,7 +18,7 @@ export default function AppNavbar() {
         {/* Brand */}
         <NavLink to="/" className="navbar-brand d-flex align-items-center gap-2 m-0">
           <i className="bi bi-calendar-event text-success fs-4" />
-          <span className="fw-semibold">EventConnect</span>
+          <span className="fw-semibold">RolêHub</span>
         </NavLink>
 
         {/* Centro */}
