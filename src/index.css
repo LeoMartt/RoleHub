@@ -1,0 +1,189 @@
+html, body, #root { height: 100%; }
+body { margin: 0; }
+
+/* garante altura total */
+html, body, #root { height: 100%; }
+body { margin: 0; }
+
+/* faixa verde logo abaixo da navbar */
+.ec-hero-bar {
+  height: 56px;                       /* ajuste a altura como quiser */
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  border-radius: 0 0 12px 12px;
+}
+
+/* opcional: arredondar “visualmente” a navbar */
+nav.bg-white {
+  border-radius: 12px 12px 0 0;
+}
+
+.ec-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* respiro vertical responsivo */
+  padding-block: clamp(16px, 6vh, 56px);
+  padding-inline: 16px;
+}
+
+/* Card do modal */
+.ec-modal-card {
+  width: 100%;
+  max-width: 520px;              /* já menor */
+  background: #fff;
+  border-radius: 16px;           /* bem arredondado */
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  transform: translateY(8px) scale(.98);
+  opacity: 0;
+  animation: ec-pop .18s ease-out forwards;
+
+  /* não encostar nos cantos: respeita o padding do backdrop */
+  /* e evita colar no topo/rodapé em telas menores */
+  max-height: calc(100vh - clamp(32px, 12vh, 112px));
+  overflow: auto;                /* scroll dentro do modal se necessário */
+}
+
+
+/* versão menor */
+.ec-modal-card--sm {
+  max-width: 520px;                    /* menorzinho */
+  border-radius: 1rem;
+}
+
+/* Header mais clean */
+.ec-modal-header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .9rem 1.1rem;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.ec-modal-title {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+/* Ícone circular verdinho */
+.ec-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgba(34,197,94,.12);
+  color: #16a34a;
+  font-size: 18px;
+}
+
+/* Botão de fechar */
+.ec-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--bs-success);
+  color: var(--bs-success);
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: .15s ease;
+}
+.ec-close:hover {
+  background: var(--bs-success);
+  color: #fff;
+}
+
+/* Animação de entrada */
+@keyframes ec-pop {
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@media (max-width: 576px) {
+  .ec-modal-card { max-width: 100%; }
+}
+
+/* Altura total da janela, descontando ~72px da navbar.
+   Ajuste 72px conforme a altura real da sua AppNavBar. */
+.hero-full {
+  position: relative;
+  min-height: calc(100vh - 280px);
+  width: 100%;
+  overflow: hidden;
+  margin-top: 0 !important;    
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(0deg, rgba(22,163,74,.90), rgba(34,197,94,.90)),
+    url('././assets/event_image.jpg');        
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-block: 3rem;
+}
+
+.hero-content > :first-child { margin-top: 0; }
+
+
+/* Fundo lilás suave da página de perfil */
+.bg-profile {
+  background: #f4f1ff; /* use o tom que mais combinar com seu tema */
+}
+
+/* Avatar */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  font-size: 28px;
+}
+
+/* Pill de contagem */
+.count-pill {
+  display: inline-flex;
+  min-width: 36px;
+  height: 28px;
+  padding: 0 .6rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--bs-gray-200);
+  color: var(--bs-gray-800);
+  font-weight: 600;
+}
+
+/* Cards arredondados lembrando o mock */
+.card.rounded-4 {
+  border-radius: 1rem !important;
+}
+
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+}
