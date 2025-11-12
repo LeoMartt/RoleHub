@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import CreateEventButton from "../components/CreateEventButton";
@@ -11,9 +12,11 @@ import { matchesDateQuery } from "../utils/datetime";
 import { handleToggleInterest } from "../utils/interest";
 import { normalize } from "../utils/text";
 import { toastError, toastSuccess } from "../utils/toast";
+import { listInterestedEventsByUser } from "../api/interests";
+import { isAbortError } from "../utils/http";
 
 export default function Home() {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const { events, isLoading, error, setEvents, reload } = useEvents();
 
   // filtros
@@ -47,6 +50,35 @@ export default function Home() {
       return byTitle && byDate && byLoc;
     });
   }, [events, search, dateQuery, location]);
+
+  // hidrata interestedByMe depois que a lista de eventos carrega
+  useEffect(() => {
+    if (!user?.id || !events.length) return;
+    const ctrl = new AbortController();
+
+    (async () => {
+      try {
+        const mine = await listInterestedEventsByUser(Number(user.id), ctrl.signal);
+        const ids = new Set(mine.map((e) => e.id));
+        setEvents((prev) => {
+          let changed = false;
+          const next = prev.map((ev) => {
+            const flag = ids.has(ev.id);
+            if ((ev.interestedByMe ?? false) !== flag) {
+              changed = true;
+              return { ...ev, interestedByMe: flag };
+            }
+            return ev;
+          });
+          return changed ? next : prev;
+        });
+      } catch (e) {
+        if (!isAbortError(e)) console.error(e);
+      }
+    })();
+
+    return () => ctrl.abort();
+  }, [user?.id, events.length, setEvents]);
 
   // interested (toggle)
   const [pending, setPending] = useState<Set<number>>(new Set());

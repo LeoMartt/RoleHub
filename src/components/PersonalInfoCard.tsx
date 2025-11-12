@@ -24,7 +24,7 @@ export default function PersonalInfoCard({ user, onSave }: Props) {
   const save = async () => {
     setSaving(true);
     try {
-      await onSave({ fullName: fullName.trim(), location: location.trim(), bio: bio.trim() });
+      await onSave({ fullName: fullName.trim(), bio: bio.trim() });
       setEditing(false);
     } finally {
       setSaving(false);
@@ -74,21 +74,11 @@ export default function PersonalInfoCard({ user, onSave }: Props) {
             <input className="form-control" value={user.email} disabled />
           </div>
 
-          <div className="col-12">
-            <label className="form-label">Localização</label>
-            <input
-              className="form-control"
-              value={location}
-              disabled={!editing}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-          </div>
-
-          <div className="col-12">
+          <div className="col-12 py-1">
             <label className="form-label">Biografia</label>
             <textarea
               className="form-control"
-              rows={4}
+              rows={9}
               value={bio}
               disabled={!editing}
               onChange={(e) => setBio(e.target.value)}
