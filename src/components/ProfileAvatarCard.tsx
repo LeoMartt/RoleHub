@@ -6,7 +6,7 @@ import { getErrorMessage } from "../errors";
 
 type Props = {
   user: User;
-  onAvatarUpdated?: (newUrl: string | null) => void; // o pai pode atualizar state
+  onAvatarUpdated?: (newUrl: string | null) => void;
 };
 
 export default function ProfileAvatarCard({ user, onAvatarUpdated }: Props) {
@@ -23,12 +23,7 @@ export default function ProfileAvatarCard({ user, onAvatarUpdated }: Props) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      toastError("Selecione um arquivo de imagem.");
-      e.target.value = "";
-      return;
-    }
-
+    // preview local
     const localUrl = URL.createObjectURL(file);
     setPreviewUrl(localUrl);
 
@@ -38,13 +33,13 @@ export default function ProfileAvatarCard({ user, onAvatarUpdated }: Props) {
       const finalUrl = updated.avatarUrl ?? localUrl;
       onAvatarUpdated?.(finalUrl);
       toastSuccess("Avatar atualizado!");
-    } catch (e) {
+    } catch (err) {
       setPreviewUrl(null);
-      toastError(getErrorMessage("IMAGE_UPLOAD", e));
+      toastError(getErrorMessage("IMAGE_UPLOAD", err));
     } finally {
       setUploading(false);
       setTimeout(() => URL.revokeObjectURL(localUrl), 1000);
-      e.target.value = "";
+      e.target.value = ""; // limpa input
     }
   };
 
@@ -77,7 +72,6 @@ export default function ProfileAvatarCard({ user, onAvatarUpdated }: Props) {
             <i className={`bi ${uploading ? "bi-hourglass-split" : "bi-camera"}`} />
           </button>
 
-          {/* input de arquivo escondido */}
           <input
             ref={fileRef}
             type="file"

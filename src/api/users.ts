@@ -1,5 +1,6 @@
 import { api } from "./client";
 import type { User, UpdateUserPayload } from "../types";
+import { convertImageToBase64, validateImageFile } from "../utils/imageCoverter";
 
 export async function getUsers(signal?: AbortSignal) {
   const { data } = await api.get<User[]>("/users", { signal });
@@ -16,13 +17,18 @@ export async function updateUser(id: number, payload: UpdateUserPayload): Promis
   return data;
 }
 
-/** POST /users/{id}/avatar (multipart/form-data) -> User atualizado (avatarUrl novo) */
 export async function uploadAvatar(userId: number, file: File): Promise<User> {
-  const form = new FormData();
-  form.append("file", file);
+  // valida e converte
+  validateImageFile(file, 5); // limite de 5MB (ajuste se quiser)
+  const avatarBase64 = await convertImageToBase64(file);
 
-  const { data } = await api.post<User>(`/users/${userId}/avatar`, form, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  // envia em JSON: { avatarBase64: "data:image/...;base64,..." }
+  const { data } = await api.put<User>(`/users/${userId}/avatar`, { avatarBase64 });
+  return data;
+}
+
+/** Remove avatar (DELETE /users/{id}/avatar) */
+export async function removeAvatar(userId: number): Promise<User> {
+  const { data } = await api.delete<User>(`/users/${userId}/avatar`);
   return data;
 }

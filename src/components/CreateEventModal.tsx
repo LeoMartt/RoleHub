@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
-import { createEvent } from "../api/events";
+import { createEvent, uploadEventImage } from "../api/events";
 import { datePtToIso, timeToBackend, maskDate, maskTime } from "../utils/datetime";
 import { toastError, toastSuccess } from "../utils/toast";
 import { getErrorMessage } from "../errors";
@@ -10,14 +10,14 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onCreated?: () => void;
-  organizerId: number;                 // <<< novo
+  organizerId: number; // obrigatório (usuário logado)
 };
 
 type FormValues = {
   title: string;
   description: string;
-  date: string;   // dd/mm/aaaa
-  time: string;   // HH:mm
+  date: string;     // dd/mm/aaaa
+  time: string;     // HH:mm
   location: string;
   category: string;
 };
@@ -30,8 +30,23 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
 
   const [dateVal, setDateVal] = useState("");
   const [timeVal, setTimeVal] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   if (!open) return null;
+
+  const onPickImage = () => fileRef.current?.click();
+
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0] || null;
+    if (!f) return;
+    if (!f.type.startsWith("image/")) {
+      toastError("Selecione um arquivo de imagem.");
+      e.target.value = "";
+      return;
+    }
+    setImageFile(f);
+  };
 
   const onSubmit = async (v: FormValues) => {
     try {
@@ -45,7 +60,19 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
         imageUrl: null,
       };
 
-      await createEvent(payload, organizerId);    // <<< envia com organizerId
+      // 1) cria o evento
+      const created = await createEvent(payload, organizerId);
+
+      // 2) se escolheu imagem, faz upload via PUT /events/{id}/image
+      if (imageFile) {
+        try {
+          await uploadEventImage(Number(created.id), imageFile);
+        } catch (err) {
+          // não falhar a criação inteira por causa da imagem
+          toastError(getErrorMessage("IMAGE_UPLOAD", err));
+        }
+      }
+
       toastSuccess("Evento criado com sucesso!");
       onCreated?.();
       onClose();
@@ -71,6 +98,7 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
 
         <div className="p-3 p-md-4 ec-modal-body-compact">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            {/* Título */}
             <div className="mb-3">
               <label className="form-label fw-semibold">Título do Evento *</label>
               <input
@@ -82,6 +110,7 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
               {errors.title && <div className="invalid-feedback">{errors.title.message}</div>}
             </div>
 
+            {/* Descrição */}
             <div className="mb-3">
               <label className="form-label fw-semibold">Descrição</label>
               <textarea
@@ -92,6 +121,7 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
               />
             </div>
 
+            {/* Data + Hora */}
             <div className="row">
               <div className="col-12 col-md-6 mb-3">
                 <label className="form-label fw-semibold d-flex align-items-center gap-2 mb-1">
@@ -152,6 +182,7 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
               </div>
             </div>
 
+            {/* Localização */}
             <div className="mb-3">
               <label className="form-label fw-semibold d-flex align-items-center gap-2">
                 <i className="bi bi-geo-alt text-success" /> Localização *
@@ -165,7 +196,8 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
               {errors.location && <div className="invalid-feedback">{errors.location.message}</div>}
             </div>
 
-            <div className="mb-4">
+            {/* Categoria */}
+            <div className="mb-3">
               <label className="form-label fw-semibold">Categoria *</label>
               <input
                 type="text"
@@ -176,6 +208,30 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
               {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
             </div>
 
+            {/* Imagem do evento (opcional) */}
+            <div className="mb-4">
+              <label className="form-label fw-semibold d-flex align-items-center gap-2">
+                <i className="bi bi-image" /> Imagem do evento (opcional)
+              </label>
+              <div className="d-flex gap-2">
+                <button type="button" className="btn btn-outline-secondary rounded-pill px-3" onClick={onPickImage}>
+                  <i className="bi bi-upload me-2" />
+                  Selecionar imagem
+                </button>
+                <span className="align-self-center small text-body-secondary">
+                  {imageFile ? imageFile.name : "Nenhum arquivo selecionado"}
+                </span>
+              </div>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                className="d-none"
+                onChange={onFileChange}
+              />
+            </div>
+
+            {/* Actions */}
             <div className="d-flex gap-3 justify-content-between">
               <button type="button" className="btn btn-light rounded-pill px-4" onClick={onClose}>
                 Cancelar

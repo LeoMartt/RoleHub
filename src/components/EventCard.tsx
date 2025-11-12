@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { Event } from '../types/event';
 import { formatEventDatePt } from '../utils/datetime';
 
@@ -11,8 +12,16 @@ export default function EventCard({ event, onInterested, disabled = false }: Pro
   const { id, title, description, date, time, location,
           interestedCount, organizer, imageUrl, interestedByMe } = event;
 
+  const navigate = useNavigate();
+  const goDetails = () => navigate(`/events/${id}`);
+
   return (
-    <div className="card shadow-sm border-0 rounded-4 overflow-hidden h-100">
+    <div
+      className="card shadow-sm border-0 rounded-4 overflow-hidden h-100"
+      role="button"
+      onClick={goDetails}
+      style={{ cursor: "pointer" }}
+    >
       <div
         style={{
           height: 180,
@@ -44,12 +53,11 @@ export default function EventCard({ event, onInterested, disabled = false }: Pro
 
           <button
             type="button"
-            className={`btn rounded-pill px-3 ${
-              interestedByMe ? "btn-success" : "btn-light border"
-            }`}
-            onClick={() => onInterested?.(id)}
+            className={`btn rounded-pill px-3 ${interestedByMe ? "btn-success" : "btn-light border"}`}
+            onClick={(e) => { e.stopPropagation(); onInterested?.(id); }}
             disabled={disabled}
             aria-busy={disabled}
+            title={interestedByMe ? "Remover interesse" : "Confirmar interesse"}
           >
             {disabled ? (
               <i className="bi bi-hourglass-split me-2" />

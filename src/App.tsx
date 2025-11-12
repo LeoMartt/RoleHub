@@ -6,12 +6,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import ProfileLayout from './components/ProfileLayout';
+import EventDetails from './pages/EventDetail';
 
 export default function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/events/:id" element={<EventDetails />} />
       </Route>
 
       <Route element={<AuthLayout />}>
@@ -21,7 +23,6 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
       </Route>
       </Route>
-
       <Route path="*" element={<div className="container py-5">404</div>} />
     </Routes>
   );
