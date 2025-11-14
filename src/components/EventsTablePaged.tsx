@@ -6,7 +6,7 @@ type ActionConfig = {
   label: string;
   variant?: "danger" | "outline-danger" | "secondary" | "outline-secondary";
   onClick: (ev: Event) => void | Promise<void>;
-  isBusy?: (id: number) => boolean; // desabilita/mostra spinner por linha
+  isBusy?: (id: number) => boolean; 
   title?: string;
 };
 
@@ -14,7 +14,7 @@ type Props = {
   title: string;
   events: Event[];
   emptyMessage?: string;
-  pageSize?: number; // default 10
+  pageSize?: number;
   action?: ActionConfig;
 };
 

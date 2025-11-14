@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import CreateEventButton from "../components/CreateEventButton";
@@ -19,7 +18,6 @@ export default function Home() {
   const { user } = useAuth();
   const { events, isLoading, error, setEvents, reload } = useEvents();
 
-  // filtros
   const [search, setSearch] = useState("");
   const [dateQuery, setDateQuery] = useState("");
   const [location, setLocation] = useState("");
@@ -28,7 +26,6 @@ export default function Home() {
     if (error) toastError(error);
   }, [error]);
 
-  // opções únicas de localização
   const locationOptions = useMemo<eventsLocalization[]>(() => {
     const set = new Set<string>();
     for (const e of events) {

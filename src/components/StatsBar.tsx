@@ -1,4 +1,3 @@
-// src/components/StatsBar.tsx
 import { useEffect, useMemo, useState } from "react";
 import type { Event } from "../types/event";
 import { getUsersCount } from "../utils/users";

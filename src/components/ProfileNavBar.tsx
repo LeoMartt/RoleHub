@@ -6,7 +6,7 @@ export default function ProfileNavBar() {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login"); // ou "/"
+    navigate("/login"); 
   };
 
   return (

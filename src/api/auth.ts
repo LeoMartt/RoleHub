@@ -1,4 +1,3 @@
-// src/api/auth.ts
 import { api, setAuthToken } from "./client";
 import type { User } from "../types";
 
@@ -29,12 +28,9 @@ export async function signup(payload: SignupPayload) {
 
 export async function logout() {
   try {
-    // aciona o endpoint do backend (opcionalmente ignore erros)
     await api.post("/auth/logout");
   } catch {
-    // ignore: mesmo que falhe, vamos limpar o cliente
   }
-  // limpa cliente
   localStorage.removeItem("auth_token");
   setAuthToken(undefined);
   window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));

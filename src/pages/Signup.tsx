@@ -47,7 +47,6 @@ export default function Signup() {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            {/* Nome completo */}
             <div className="mb-3">
               <label className="form-label fw-semibold">Nome completo</label>
               <input
@@ -59,7 +58,6 @@ export default function Signup() {
               {errors.fullName && <div className="invalid-feedback">{errors.fullName.message}</div>}
             </div>
 
-            {/* E-mail */}
             <div className="mb-3">
               <label className="form-label fw-semibold">E-mail</label>
               <div className="input-group">
