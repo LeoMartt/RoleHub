@@ -1,16 +1,12 @@
 import type { Event } from "../types/event";
 import { toggleInterest } from "../api/interests";
 
-/**
- * Alterna interesse do usuário no evento com update otimista.
- */
 export async function handleToggleInterest(
   eventId: number,
   userId: number,
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>
 ) {
   let snapshot: Event[] = [];
-  // otimista
   setEvents((prev) => {
     snapshot = prev;
     return prev.map((ev) => {
@@ -27,7 +23,6 @@ export async function handleToggleInterest(
   try {
     const { isInterested } = await toggleInterest(userId, eventId);
 
-    // reconcilia caso o backend responda diferente do otimista
     setEvents((prev) =>
       prev.map((ev) => {
         if (ev.id !== eventId) return ev;
@@ -45,7 +40,6 @@ export async function handleToggleInterest(
       })
     );
   } catch (err) {
-    // rollback
     setEvents(() => snapshot);
     throw err;
   }

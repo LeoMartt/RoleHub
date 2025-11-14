@@ -53,7 +53,7 @@ export default function EventDetails() {
           );
         }
       } catch (e) {
-        if (isAbortError(e)) return; // 👈 não mostre toast em abort
+        if (isAbortError(e)) return; 
         toastError(getErrorMessage("EVENTS_LOAD", e));
       }
     })();
@@ -78,13 +78,11 @@ export default function EventDetails() {
       setPending(true);
       const { isInterested } = await toggleInterest(Number(user.id), eventId);
 
-      // atualiza cabeçalho (flag + contagem)
       setEvent((prev) =>
         prev ? { ...prev, interestedByMe: isInterested } : prev
       );
       setInterestedCount((c) => Math.max(0, c + (isInterested ? 1 : -1)));
 
-      // atualiza tabela (otimista simples)
       if (isInterested) {
         const me: User = {
           id: user.id,

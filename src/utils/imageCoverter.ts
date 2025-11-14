@@ -1,4 +1,3 @@
-// Converte File -> dataURL (base64) ex.: "data:image/png;base64,...."
 export function convertImageToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -10,7 +9,6 @@ export function convertImageToBase64(file: File): Promise<string> {
   });
 }
 
-// (opcional) validações simples
 export function validateImageFile(file: File, maxMB = 3) {
   if (!file.type.startsWith("image/")) {
     throw new Error("Selecione um arquivo de imagem.");

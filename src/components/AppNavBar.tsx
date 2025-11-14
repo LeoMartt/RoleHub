@@ -1,4 +1,3 @@
-// src/components/AppNavbar.tsx
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../api/auth";
 import { useAuthFlag } from "../hooks/useAuthFlag";
@@ -9,7 +8,7 @@ export default function AppNavbar() {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login"); // ou "/" se preferir
+    navigate("/login"); 
   };
 
   return (

@@ -10,7 +10,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onCreated?: () => void;
-  organizerId: number; // obrigatório (usuário logado)
+  organizerId: number; 
 };
 
 type FormValues = {
@@ -60,15 +60,12 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
         imageUrl: null,
       };
 
-      // 1) cria o evento
       const created = await createEvent(payload, organizerId);
 
-      // 2) se escolheu imagem, faz upload via PUT /events/{id}/image
       if (imageFile) {
         try {
           await uploadEventImage(Number(created.id), imageFile);
         } catch (err) {
-          // não falhar a criação inteira por causa da imagem
           toastError(getErrorMessage("IMAGE_UPLOAD", err));
         }
       }
@@ -201,14 +198,14 @@ export default function CreateEventModal({ open, onClose, onCreated, organizerId
               <label className="form-label fw-semibold">Categoria *</label>
               <input
                 type="text"
-                className={`form-control ${errors.category ? "is-invalid" : ""}`}
+                className={`form-control ${errors.category ? "is-invalid" : ""} text-start`}
                 placeholder="Ex: Música, Gastronomia, Esporte..."
                 {...register("category", { required: "Informe a categoria." })}
               />
               {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
             </div>
 
-            {/* Imagem do evento (opcional) */}
+            {/* Imagem do evento */}
             <div className="mb-4">
               <label className="form-label fw-semibold d-flex align-items-center gap-2">
                 <i className="bi bi-image" /> Imagem do evento (opcional)

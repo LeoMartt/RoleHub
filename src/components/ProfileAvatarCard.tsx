@@ -23,7 +23,6 @@ export default function ProfileAvatarCard({ user, onAvatarUpdated }: Props) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // preview local
     const localUrl = URL.createObjectURL(file);
     setPreviewUrl(localUrl);
 
@@ -39,7 +38,7 @@ export default function ProfileAvatarCard({ user, onAvatarUpdated }: Props) {
     } finally {
       setUploading(false);
       setTimeout(() => URL.revokeObjectURL(localUrl), 1000);
-      e.target.value = ""; // limpa input
+      e.target.value = ""; 
     }
   };
 

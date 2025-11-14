@@ -21,7 +21,7 @@ export default function Login() {
     try {
       await login(values);
       toastSuccess("Bem-vindo!");
-      navigate("/"); // redireciona para a Home
+      navigate("/"); 
     } catch (e) {
       toastError(getErrorMessage("AUTH_LOGIN", e));
     }

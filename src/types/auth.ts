@@ -8,11 +8,10 @@ export interface LoginPayload {
 export interface SignupPayload {
   fullName: string;
   email: string;
-  username: string;  // pode ser derivado do e-mail no serviço, se faltar
+  username: string; 
   password: string;
 }
 
-// (Opcional) dados mínimos de usuário autenticado
 export interface AuthUser {
   id: number;
   fullName: string;

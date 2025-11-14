@@ -2,10 +2,10 @@ import type { ChangeEvent } from "react";
 import type { eventsLocalization } from '../types';
 
 function formatDateQuery(v: string) {
-  const onlyDigits = v.replace(/\D/g, "").slice(0, 8); // até 8 dígitos
+  const onlyDigits = v.replace(/\D/g, "").slice(0, 8); 
   return onlyDigits
-    .replace(/^(\d{2})(\d)/, "$1/$2")       // dd/
-    .replace(/^(\d{2}\/\d{2})(\d)/, "$1/$2"); // dd/mm/
+    .replace(/^(\d{2})(\d)/, "$1/$2")     
+    .replace(/^(\d{2}\/\d{2})(\d)/, "$1/$2"); 
 }
 
 type Props = {
@@ -51,7 +51,7 @@ export default function EventsFilter({
           </div>
         </div>
 
-        {/* Data (texto para aceitar parcial: dd, dd/mm, dd/mm/aaaa) */}
+        {/* Data  */}
         <div className="mb-3">
           <div className="input-group">
             <span className="input-group-text bg-body-secondary">

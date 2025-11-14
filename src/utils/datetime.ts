@@ -27,7 +27,6 @@ export function toDDMMYYYY(iso: string | null | undefined): string {
   return `${d.padStart(2, '0')}/${m.padStart(2, '0')}/${y}`;
 }
 
-/** Ex.: query "10", "10/02", "10/02/2025" */
 export function matchesDateQuery(iso: string, query: string): boolean {
   if (!query) return true;
   const formatted = toDDMMYYYY(iso);
@@ -41,7 +40,6 @@ export function datePtToIso(d: string): string {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-/** "HH:mm" ou "HHmm" -> "HH:mm:ss" */
 export function timeToBackend(t: string): string {
   let hh = '', mm = '';
   if (/^\d{2}:\d{2}$/.test(t)) [hh, mm] = t.split(':');
@@ -50,13 +48,11 @@ export function timeToBackend(t: string): string {
   return `${hh.padStart(2,'0')}:${mm.padStart(2,'0')}:00`;
 }
 
-/** máscara leve "dd/mm/aaaa" aceita parcial */
 export function maskDate(v: string) {
   const d = v.replace(/\D/g, '').slice(0, 8);
   return d.replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2}\/\d{2})(\d)/, '$1/$2');
 }
 
-/** máscara leve "HH:mm" */
 export function maskTime(v: string) {
   const d = v.replace(/\D/g, '').slice(0, 4);
   return d.replace(/^(\d{2})(\d)/, '$1:$2');

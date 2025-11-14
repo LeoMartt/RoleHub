@@ -9,7 +9,7 @@ export async function getUsers(signal?: AbortSignal) {
 
 export async function getCurrentUser(): Promise<User> {
   const { data } = await api.get("/auth/me");
-  return (data.user ?? data) as User; // backend pode devolver {user:{...}} ou direto o objeto
+  return (data.user ?? data) as User;
 }
 
 export async function updateUser(id: number, payload: UpdateUserPayload): Promise<User> {
@@ -18,16 +18,13 @@ export async function updateUser(id: number, payload: UpdateUserPayload): Promis
 }
 
 export async function uploadAvatar(userId: number, file: File): Promise<User> {
-  // valida e converte
-  validateImageFile(file, 5); // limite de 5MB (ajuste se quiser)
+  validateImageFile(file, 50); 
   const avatarBase64 = await convertImageToBase64(file);
 
-  // envia em JSON: { avatarBase64: "data:image/...;base64,..." }
   const { data } = await api.put<User>(`/users/${userId}/avatar`, { avatarBase64 });
   return data;
 }
 
-/** Remove avatar (DELETE /users/{id}/avatar) */
 export async function removeAvatar(userId: number): Promise<User> {
   const { data } = await api.delete<User>(`/users/${userId}/avatar`);
   return data;

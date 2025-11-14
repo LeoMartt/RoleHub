@@ -1,18 +1,12 @@
 html, body, #root { height: 100%; }
 body { margin: 0; }
 
-/* garante altura total */
-html, body, #root { height: 100%; }
-body { margin: 0; }
-
-/* faixa verde logo abaixo da navbar */
 .ec-hero-bar {
-  height: 56px;                       /* ajuste a altura como quiser */
+  height: 56px;                   
   background: linear-gradient(90deg, #16a34a, #22c55e);
   border-radius: 0 0 12px 12px;
 }
 
-/* opcional: arredondar “visualmente” a navbar */
 nav.bg-white {
   border-radius: 12px 12px 0 0;
 }
@@ -26,36 +20,28 @@ nav.bg-white {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* respiro vertical responsivo */
   padding-block: clamp(16px, 6vh, 56px);
   padding-inline: 16px;
 }
 
-/* Card do modal */
 .ec-modal-card {
   width: 100%;
-  max-width: 520px;              /* já menor */
+  max-width: 520px;           
   background: #fff;
-  border-radius: 16px;           /* bem arredondado */
+  border-radius: 16px;           
   box-shadow: 0 20px 60px rgba(0,0,0,.25);
   transform: translateY(8px) scale(.98);
   opacity: 0;
   animation: ec-pop .18s ease-out forwards;
-
-  /* não encostar nos cantos: respeita o padding do backdrop */
-  /* e evita colar no topo/rodapé em telas menores */
   max-height: calc(100vh - clamp(32px, 12vh, 112px));
-  overflow: auto;                /* scroll dentro do modal se necessário */
+  overflow: auto;          
 }
 
-
-/* versão menor */
 .ec-modal-card--sm {
-  max-width: 520px;                    /* menorzinho */
+  max-width: 520px;                    
   border-radius: 1rem;
 }
 
-/* Header mais clean */
 .ec-modal-header {
   position: sticky;
   top: 0;
@@ -76,7 +62,6 @@ nav.bg-white {
   font-size: 1.15rem;
 }
 
-/* Ícone circular verdinho */
 .ec-icon-wrap {
   display: inline-flex;
   align-items: center;
@@ -89,7 +74,6 @@ nav.bg-white {
   font-size: 18px;
 }
 
-/* Botão de fechar */
 .ec-close {
   width: 40px;
   height: 40px;
@@ -107,7 +91,6 @@ nav.bg-white {
   color: #fff;
 }
 
-/* Animação de entrada */
 @keyframes ec-pop {
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
@@ -116,8 +99,6 @@ nav.bg-white {
   .ec-modal-card { max-width: 100%; }
 }
 
-/* Altura total da janela, descontando ~72px da navbar.
-   Ajuste 72px conforme a altura real da sua AppNavBar. */
 .hero-full {
   position: relative;
   min-height: calc(100vh - 280px);
@@ -149,20 +130,16 @@ nav.bg-white {
 
 .hero-content > :first-child { margin-top: 0; }
 
-
-/* Fundo lilás suave da página de perfil */
 .bg-profile {
-  background: #f4f1ff; /* use o tom que mais combinar com seu tema */
+  background: #f4f1ff; 
 }
 
-/* Avatar */
 .profile-avatar {
   width: 120px;
   height: 120px;
   font-size: 28px;
 }
 
-/* Pill de contagem */
 .count-pill {
   display: inline-flex;
   min-width: 36px;
@@ -176,7 +153,6 @@ nav.bg-white {
   font-weight: 600;
 }
 
-/* Cards arredondados lembrando o mock */
 .card.rounded-4 {
   border-radius: 1rem !important;
 }
